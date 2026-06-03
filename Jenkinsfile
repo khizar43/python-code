@@ -16,6 +16,11 @@ pipeline {
                 bat 'python python.py'
             }
         }
+        stage('test Python') {
+            steps {
+                bat 'pytest'
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
