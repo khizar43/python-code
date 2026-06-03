@@ -27,7 +27,8 @@ pipeline {
                 bat 'docker build -t python-app:v1 .'
             }
         }
-    }
+    } 
+    
     post {
         success {
             echo 'Pipeline Successful'
