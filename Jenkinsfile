@@ -22,16 +22,10 @@ pipeline {
                 bat 'python -m pip install -r requirements.txt'
               }
           } 
-
-        stage('Run Python') {
-            steps {
-                bat 'python app.py'
-            }
-        }
         
         stage('test Python') {
             steps {
-                bat 'pytest'
+                bat 'python -m pytest'
             }
         }
 
@@ -56,8 +50,13 @@ pipeline {
         stage('Run Container') {
             steps {
                 bat 'docker run -d -p 5000:5000 --name python-app %IMAGE_NAME%:%IMAGE_TAG%'
-    }
-}
+             }
+        }
+        stage('Health Check') {
+            steps {
+                bat 'curl http://localhost:5000/health'
+            }
+        }
     } 
     
     post {
