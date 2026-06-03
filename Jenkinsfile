@@ -51,7 +51,10 @@ pipeline {
         }
         stage('Run Container') {
             steps {
-                bat 'docker run -d -p 5000:5000 --name python-app %IMAGE_NAME%:%IMAGE_TAG%'
+                bat '''
+                docker rm -f python-app || exit 0
+                docker run -d -p 5000:5000 --name python-app %IMAGE_NAME%:%IMAGE_TAG%
+                '''
              }
         }
         stage('Health Check') {
