@@ -17,17 +17,18 @@ pipeline {
                     url: 'https://github.com/khizar43/python-code.git'
             }
         }
+        stage('Install Dependencies') {
+            steps {
+                bat 'python -m pip install -r requirements.txt'
+              }
+          } 
 
         stage('Run Python') {
             steps {
                 bat 'python python.py'
             }
         }
-        stage('Install Dependencies') {
-            steps {
-                bat 'python -m pip install -r requirements.txt'
-              }
-          } 
+        
         stage('test Python') {
             steps {
                 bat 'pytest'
