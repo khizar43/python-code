@@ -1,6 +1,8 @@
 pipeline {
 
-    agent any
+    agent {
+        Label "windows"
+    }
 
     environment {
          IMAGE_NAME = "khizaryounus/python-app"
