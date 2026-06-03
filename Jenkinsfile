@@ -2,6 +2,11 @@ pipeline {
 
     agent any
 
+    environment {
+        DOCKER_CREDS = credentials('dockerhub-creds')
+    }
+
+
     stages {
 
         stage('Checkout') {
@@ -27,9 +32,22 @@ pipeline {
             }
         }
 
+        stage("docker login"){
+            steps {
+                 bat '''
+                docker login -u %DOCKER_CREDS_USR% -p %DOCKER_CREDS_PSW%
+                '''
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t python-app:v1 .'
+                bat 'docker build -t khizer43/python-app:v1 .'
+            }
+        }
+         stage('Push Image') {
+            steps {
+                bat 'docker push %IMAGE_NAME%:v1'
             }
         }
     } 
