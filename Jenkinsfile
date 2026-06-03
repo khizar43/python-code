@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-         IMAGE_NAME = "khizer43/python-app"
+         IMAGE_NAME = "khizeryounus/python-app"
         DOCKER_CREDS = credentials('dockerhub-creds')
     }
 
@@ -43,7 +43,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t khizer43/python-app:v1 .'
+                bat 'docker build -t %IMAGE_NAME%:v1 .'
             }
         }
          stage('Push Image') {
