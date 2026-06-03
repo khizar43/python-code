@@ -4,6 +4,7 @@ pipeline {
 
     environment {
          IMAGE_NAME = "khizaryounus/python-app"
+         IMAGE_TAG = "${BUILD_NUMBER}"
         DOCKER_CREDS = credentials('dockerhub-creds')
     }
 
@@ -43,14 +44,19 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t %IMAGE_NAME%:v1 .'
+                bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'
             }
         }
          stage('Push Image') {
             steps {
-                bat 'docker push %IMAGE_NAME%:v1'
+                bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
             }
         }
+        stage('Run Container') {
+            steps {
+                bat 'docker run --rm %IMAGE_NAME%:%IMAGE_TAG%'
+    }
+}
     } 
     
     post {
